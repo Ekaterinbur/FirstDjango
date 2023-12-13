@@ -19,12 +19,19 @@ items = [
     {"id": 8, "name": "Кепка" ,"quantity":124},
     ]
 
-def home(request):
-    text = """
-    <h1> "Изучаем django" </h1>
-    <strong> Автор </strong>:  <i> Буравкова Е.И. </i>
-    """
-    return HttpResponse (text)
+# def home(request): -- Домашняя страница ---проба -- day_1
+#     text = """
+#     <h1> "Изучаем django" </h1>
+#     <strong> Автор </strong>:  <i> Буравкова Е.И. </i>
+#     """
+#     return HttpResponse (text)
+
+def home(request): ## day_2 
+    context ={
+        "name": "Иванов Иван Иванович",
+        "email": "my_mail@mail.ru"
+    }
+    return render (request, "index.html",context)
 
 def about(request):
     text = f"""
