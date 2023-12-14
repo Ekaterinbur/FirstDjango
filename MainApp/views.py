@@ -35,6 +35,10 @@ def home(request): ## day_2
 
 def about(request):
     text = f"""
+    <header>
+        <a href = "/"> Home </a> / <a href = "/items"> Items </a> / <a href = "/about"> About </a>
+    </header> 
+    <br>
     Имя: <b>{author["Имя"]}</b><br>
     Отчество: <b>{author["Отчество"]}</b><br>
     Фамилия: <b>{author["Фамилия"]}</b><br>
@@ -44,14 +48,12 @@ def about(request):
     return HttpResponse (text)
 
 def get_item(request,item_id: int):
-    for item in items: 
-        if item["id"] == item_id :
-            result = f"""
-            <h2> Имя : {item["name"]} </h2> 
-            <p> количество : {item["quantity"]} </p> 
-            <p> <a href="/items"> Назад к списку товаров </a></p>
-            """
-            return HttpResponse (result)
+    item = next ((item for item in items if item ["id"] == item_id), None)
+    if item :
+        context ={
+            "item": item
+        }
+        return render (request, "item_page.html", context)
     return HttpResponseNotFound (f'Item with id = {item_id} not found.')
 
 def get_items(request):
