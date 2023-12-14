@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseNotFound
+from MainApp.models import Item
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 
@@ -11,13 +13,13 @@ author = {
     "email": "vasya@mail.ru"
     }  
 
-items = [
-    {"id": 1, "name": "Кроссовки abibas" ,"quantity":5},
-    {"id": 2, "name": "Куртка кожаная" ,"quantity":2},
-    {"id": 5, "name": "Coca-cola 1 литр" ,"quantity":12},
-    {"id": 7, "name": "Картофель фри" ,"quantity":0},
-    {"id": 8, "name": "Кепка" ,"quantity":124},
-    ]
+# items = [
+#     {"id": 1, "name": "Кроссовки abibas" ,"quantity":5},
+#     {"id": 2, "name": "Куртка кожаная" ,"quantity":2},
+#     {"id": 5, "name": "Coca-cola 1 литр" ,"quantity":12},
+#     {"id": 7, "name": "Картофель фри" ,"quantity":0},
+#     {"id": 8, "name": "Кепка" ,"quantity":124},
+# ]
 
 # def home(request): -- Домашняя страница ---проба -- day_1
 #     text = """
@@ -47,14 +49,25 @@ def about(request):
     """
     return HttpResponse (text)
 
+# def get_item(request,item_id: int): -- из словаря 
+#     item = next ((item for item in items if item ["id"] == item_id), None)
+#     if item :
+#         context ={
+#             "item": item
+#         }
+#         return render (request, "item_page.html", context)
+#     return HttpResponseNotFound (f'Item with id = {item_id} not found.')
+
 def get_item(request,item_id: int):
-    item = next ((item for item in items if item ["id"] == item_id), None)
-    if item :
+    try: 
+        item = Item.objects.get(id = item_id)
+    except ObjectDoesNotExist:
+        return HttpResponseNotFound (f'Item with id = {item_id} not found.')
+    else :
         context ={
             "item": item
         }
         return render (request, "item_page.html", context)
-    return HttpResponseNotFound (f'Item with id = {item_id} not found.')
 
 def get_items(request):
     # result = f"<h2> Cписок товаров </h2> <ol>" --- day_1 
@@ -62,6 +75,7 @@ def get_items(request):
     #     result += f""" <li><a href="/item/{item ["id"]}"> {item ["name"]} </a></li>"""
     # result += "</ol>"
     # return HttpResponse (result)
+    items = Item.objects.all()
     context = { 
         "items": items
     }

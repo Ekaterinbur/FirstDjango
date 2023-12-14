@@ -10,9 +10,7 @@
     </header>  
     <h1> {{item.name}} </h1>
     <div> 
-        {% if item.quantity == 0  %} Товар отсутствует 
-        {% else %} количество {{item.quantity}}
-        {% endif %}
+        Количество : {{ item.count | default:"Товар отсутствует" }}  
     </div>
     <p> <a href="/items"> Назад к списку товаров </a></p>
 </body>
