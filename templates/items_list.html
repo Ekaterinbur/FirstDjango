@@ -1,4 +1,25 @@
-<!DOCTYPE html>
+
+{% extends "base.html" %} {#Должно быть первым #}
+{% load static %}
+{% block style %}
+    {{ block.super}}
+    <link rel="stylesheet" href="{% static 'style.css' %}"
+{% endblock style%}
+
+{% block content %}
+
+    {% include "inc_header.html" %}
+    <h1> Список товаров </h1>
+    
+    {% for item in items %}
+        <div class="items-list">
+            <a href="{% url "item-detail" item.id %}"> {{ item.name }}</a>
+        </div>
+    {% endfor %}
+
+{% endblock content %}
+
+{% comment %} <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -25,4 +46,6 @@
         {% endfor %}
     </ol>
 </body>
-</html>
+</html> {% endcomment %}
+
+

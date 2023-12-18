@@ -1,4 +1,41 @@
-<!DOCTYPE html>
+
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} Item page {% endblock %}
+{% block style %}
+    {{ block.super}}
+    <link rel="stylesheet" href="{% static 'style.css' %}"
+{% endblock%}
+
+{% block content %}
+
+    {% include "inc_header.html" %}
+    <h1> Товар </h1>
+
+    <span style="font-size: large;"><b> {{ item.name }} </b></span><br> 
+    Brand: <span style="font-size: large;"> {{ item.brand }} </span><br>
+    <div>
+        Количество: {{ item.count | default:"Товар отсутствует на складе" }} 
+    </div>
+    <div>
+        Описание: {{ item.description }}<br><br>
+    </div>
+    <i> Цвета: </i>
+    <ul class="ul_no_mark">
+        {% for color in colors %}
+            <li><div class="div_color" style="background-color:{{color.name}};"></div>&nbsp;&nbsp;{{ color.name }}</li>
+        {% endfor %}
+    </ul>
+    <br/><br/>
+
+    <a href="{% url 'items-list' %}"> Назад к списку товаров</a>
+
+{% endblock %}
+
+
+
+{% comment %} <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -17,4 +54,4 @@
     </div>
     <p> <a href="/items"> Назад к списку товаров </a></p>
 </body>
-</html>
+</html> {% endcomment %}
