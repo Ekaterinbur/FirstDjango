@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title> Items list </title>
+    <style type ="text/css">
+        DIV {
+        display: inline;
+        widht: 100px;
+        margin: 7px;
+        padding: 10px;
+        border: 4px solid black;
+        background: #fc0;
+        }
+    </style>    
 </head>
 <body>
     <header>
@@ -11,7 +21,7 @@
     <h2> Список товаров </h2>
     <ol> 
         {% for item in items  %}
-            <li> <a href = "item/{{item.id}}"> {{item.name}} </a> </li>
+            <div> <a href = "item/{{item.id}}"> {{item.name}} </a> </div>
         {% endfor %}
     </ol>
 </body>
